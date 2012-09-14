@@ -2752,9 +2752,12 @@ double svm_predict(const svm_model *model, const svm_node *x)
 	return pred_result;
 }
 
-double svm_predict_spheroid_distance(const svm_model *model, const svm_node *x, double *distance)
+double svm_predict_include_distance(const svm_model *model, const svm_node *x, double *distance)
 {
-	if (model->param.svm_type == SVDD)
+	if (model->param.svm_type == ONE_CLASS ||
+	    model->param.svm_type == EPSILON_SVR ||
+	    model->param.svm_type == NU_SVR ||
+	    model->param.svm_type == SVDD)
 	{
 		double pred_result = svm_predict_values(model, x, distance);
 		return pred_result;
